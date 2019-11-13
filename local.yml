@@ -3,7 +3,7 @@
   become: yes
   tasks:
     - name: Configure postfix
-      command: "{{ items }}"
+      command: "{{ item }}"
       with_items:
         - postconf -e "mydestination = $DOMAINS, localhost.localdomain, localhost"
         - postconf -e "mynetworks = 127.0.0.0/8, $NETWORK"
