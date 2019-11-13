@@ -1,0 +1,23 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Configure postfix
+      command: "{{ items }}"
+      with_items:
+        - postconf -e "mydestination = $DOMAINS, localhost.localdomain, localhost"
+        - postconf -e "mynetworks = 127.0.0.0/8, $NETWORK"
+        - postconf -e "inet_interfaces = all"
+        - postconf -e "recipient_delimiter = +"
+        - postconf -e "home_mailbox = Maildir/"
+      notify: restart_postfix
+
+    - name: Add maildir path to profile
+      lineinfile:
+        path: /etc/profile
+        line: MAIL=~/Maildir
+
+  handlers:
+    - name: restart_postfix
+      service: postfix
+      state: restarted
