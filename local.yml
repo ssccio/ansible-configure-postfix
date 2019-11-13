@@ -20,5 +20,6 @@
 
   handlers:
     - name: restart_postfix
-      service: postfix
-      state: restarted
+      service: 
+        name: postfix
+        state: restarted
