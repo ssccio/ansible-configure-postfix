@@ -10,7 +10,8 @@
         - postconf -e "inet_interfaces = all"
         - postconf -e "recipient_delimiter = +"
         - postconf -e "home_mailbox = Maildir/"
-      notify: restart_postfix
+      notify: 
+        - restart_postfix
 
     - name: Add maildir path to profile
       lineinfile:
